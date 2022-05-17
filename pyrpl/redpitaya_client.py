@@ -133,8 +133,8 @@ class MonitorClient(object):
                                          (addr >> 16) & 0xFF,
                                          (addr >> 24) & 0xFF]))
         # send header+body
-        self.socket.send(header +
-                         np.array(values, dtype=np.uint32).tobytes())
+        self.socket.sendall(header +
+                            np.array(values, dtype=np.uint32).tobytes())
         if self.socket.recv(8) == header:  # check for in-sync transmission
             return True  # indicate successful write
         else:  # error handling
@@ -154,14 +154,14 @@ class MonitorClient(object):
             try:
                 value = function(addr, value)
             except (socket.timeout, socket.error):
-                self.logger.error("Error occured in reading attempt %s. "
-                                  "Reconnecting at addr %s to %s value %s by "
-                                  "client %s"
-                                  % (i,
-                                     hex(addr),
-                                     function.__name__,
-                                     value,
-                                     self.client_number))
+                self.logger.exception("Error occured in reading attempt %s. "
+                                      "Reconnecting at addr %s to %s value %s by "
+                                      "client %s"
+                                      % (i,
+                                         hex(addr),
+                                         function.__name__,
+                                         value,
+                                         self.client_number))
                 if self._restartserver is not None:
                     self.restart()
             else:
