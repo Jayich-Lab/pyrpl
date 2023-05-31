@@ -51,7 +51,9 @@ requirements = ['scp',
                 'nbconvert',
                 'jupyter-client']
 if sys.version_info >= (3,4):  # python version dependencies
-    requirements += ['quamash']
+    install_requires = [
+        'quamash@git+https://github.com/harvimt/quamash.git'
+    ]
 else:  # python 2.7
     requirements += ['futures', 'mock']  # mock is now a full dependency
 if os.environ.get('TRAVIS') == 'true':
