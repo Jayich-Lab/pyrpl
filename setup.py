@@ -51,7 +51,7 @@ requirements = ['scp',
                 'nbconvert',
                 'jupyter-client']
 if sys.version_info >= (3,4):  # python version dependencies
-    install_requires = [
+    requirements = [
         'quamash@git+https://github.com/harvimt/quamash.git'
     ]
 else:  # python 2.7
